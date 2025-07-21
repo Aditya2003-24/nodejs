@@ -12,7 +12,7 @@ const profileSchema = new mongoose.Schema({
     image:{
         type:String
     },
-    number:{
+    phonenumber:{
         type:String,
         trim:true,
 

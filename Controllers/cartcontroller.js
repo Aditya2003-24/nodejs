@@ -45,16 +45,16 @@ const addToCart = async (req, res) => {
         userCart.products[existingProductIndex].totalPrice =
           userCart.products[existingProductIndex].price *
           userCart.products[existingProductIndex].quantity;
-      } else {
+      // } else {
         
-        userCart.products.push({
-          productId,
-          name: foundProduct.name,
-          image: foundProduct.image,
-          price: foundProduct.price,
-          quantity,
-          totalPrice: productTotalPrice,
-        });
+      //   userCart.products.push({
+      //     productId,
+      //     name: foundProduct.name,
+      //     image: foundProduct.image,
+      //     price: foundProduct.price,
+      //     quantity,
+      //     totalPrice: productTotalPrice,
+      //   });
       }
 
       
@@ -62,7 +62,7 @@ const addToCart = async (req, res) => {
         (sum, item) => sum + item.totalPrice,
         0
       );
-      console.log(sum,item)
+      
     }
     
 

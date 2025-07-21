@@ -5,7 +5,7 @@ const categoryControll = async (req, res) => {
   try {
     const { name } = req.body;
     
-    // const imagePath = req.file?.path;/
+   
     const imagePath = req.file?.path || null;
     
     

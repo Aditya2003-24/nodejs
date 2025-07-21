@@ -39,7 +39,7 @@ export const getProduct = async (req, res) => {
     // console.log("create working!!");
   try {
     const users = await product.find();
-    res.json({ success: true, users });
+    res.status(200).json({ success: true, users });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -62,7 +62,7 @@ export const getProductById = async (req, res) => {
 // UPDATE
 export const updateProduct = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.query;
     const { name, price, originalPrice, quantity, category } = req.body;
     let updatedData = { name, price, originalPrice, quantity, category };
 
@@ -100,7 +100,7 @@ export const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const delet = await product.findByIdAndDelete(req.params.id);
+    const delet = await product.findByIdAndDelete(req.query.id);
     if (!delet)
       return res.status(404).json({ success: false, message: "product not found" });
     res.json({ success: true, message: "product deleted" });
