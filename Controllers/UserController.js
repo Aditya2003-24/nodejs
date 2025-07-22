@@ -10,6 +10,9 @@ export const sendOtp = async (req, res) => {
 
 
   let user = await User.findOne({ phone });
+  if(!phone) {
+    res.status(404).json({success:true,message:"Number is required"})
+  }
 
   if (!user) {
     user = new User({ phone, otp:hashedOtp }); 
@@ -58,13 +61,16 @@ export const verifyOtp = async (req, res) => {
 export const updateUserProfile = async (req, res) => {
   const { userId, name, email } = req.body;
 
+  
   const user = await User.findById(userId);
+  const image = req.file?.path;
   if (!user || !user.isVerified) {
     return res.status(400).json({ success: false, message: "User not verified" });
   }
 
-  user.name = name;
-  user.email = email;
+    user.name = name || user.name;
+    user.email = email || user.email;
+    if (image) user.image = image;
 
   await user.save();
 
@@ -82,4 +88,29 @@ export const loginWithPhone = async (req, res) => {
 
 
   res.status(200).json({ success: true, message: "Login successful" });
+};
+
+
+export const getUser = async (req, res) => {
+    
+  try {
+    const users = await User.find();
+    res.status(200).json({ success: true, users });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+
+export const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    res.json({ success: true, user });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 };

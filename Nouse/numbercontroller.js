@@ -134,9 +134,6 @@ export const deleteNumber = async (req, res) => {
 
 
 
-
-
-
 //Verify otp
 
 const verifyOtpController = async (req, res) => {
