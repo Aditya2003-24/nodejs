@@ -36,7 +36,7 @@ try {
 };
 
 export const getProduct = async (req, res) => {
-    // console.log("create working!!");
+  
   try {
     const users = await product.find();
     res.status(200).json({ success: true, users });
