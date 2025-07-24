@@ -18,10 +18,12 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
   },
-  image: {
+  image: [ 
+    {
     type: String,
     
   }
+]
 
 },{timestamps:true});
 

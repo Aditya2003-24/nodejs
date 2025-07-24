@@ -63,14 +63,20 @@ export const updateUserProfile = async (req, res) => {
 
   
   const user = await User.findById(userId);
-  const image = req.file?.path;
+  
   if (!user || !user.isVerified) {
     return res.status(400).json({ success: false, message: "User not verified" });
   }
 
     user.name = name || user.name;
     user.email = email || user.email;
-    if (image) user.image = image;
+   const files = req.files; 
+
+  if (files && files.length > 0) {
+    user.image = user.image || []; 
+    const imagePaths = files.map((file) => file.path);
+    user.image.push(...imagePaths); 
+  }
 
   await user.save();
 
@@ -90,6 +96,25 @@ export const loginWithPhone = async (req, res) => {
   res.status(200).json({ success: true, message: "Login successful" });
 };
 
+export const adminLogin = async (req, res) => {
+  try{
+
+  const admin = "admin@gmail.com";
+  const passw = 1234
+  const {email , password} = req.body;
+
+  if(email === admin || password === passw){
+    res.status(200).json({ success: true, message: "Admin login done"});
+  }
+  else{
+    res.status(400).json({ success: false, message: "Email and password not correct"});
+  }
+} 
+catch (err){
+   res.status(500).json({ success: false, message: err.message });
+}
+
+}
 
 export const getUser = async (req, res) => {
     

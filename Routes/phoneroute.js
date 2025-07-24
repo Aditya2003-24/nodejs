@@ -44,7 +44,7 @@ router.post("/order",placeOrder)
 
 router.post("/generateOtp",sendOtp)
 router.post("/verify",verifyOtp)
-router.put("/updateUser",upload.single("image"),updateUserProfile)
+router.put("/updateUser",upload.array("images", 5),updateUserProfile)
 router.post("/login",loginWithPhone)
 
 router.get("/user/:id",getUserById)
