@@ -59,14 +59,14 @@ export const getProductById = async (req, res) => {
   }
 };
 
-// UPDATE
+
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.query;
     const { name, price, originalPrice, quantity, category } = req.body;
     let updatedData = { name, price, originalPrice, quantity, category };
 
-    // Check if a file was uploaded
+ 
     if (req.file) {
       const imageUrl = req.file?.path;
       updatedData.image = imageUrl;

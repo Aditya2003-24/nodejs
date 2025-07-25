@@ -39,8 +39,7 @@ export const placeOrder = async (req, res) => {
 
     await order.save();
 
-    userCart.products = [];
-    await userCart.save();
+  
 
 
     res.status(201).json({
