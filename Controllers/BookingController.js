@@ -39,9 +39,6 @@ export const placeOrder = async (req, res) => {
 
     await order.save();
 
-  
-
-
     res.status(201).json({
       success: true,
       message: "Order placed successfully",

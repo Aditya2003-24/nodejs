@@ -1,0 +1,57 @@
+import dotenv from "dotenv";
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import multer from "multer";
+import multerS3 from "multer-s3";
+
+dotenv.config();
+
+const s3Client = new S3Client({
+    region: process.env.LINODE_OBJECT_STORAGE_REGION,
+    endpoint: new URL(process.env.LINODE_OBJECT_STORAGE_ENDPOINT).toString(), // Ensure a valid URL
+    forcePathStyle: false,
+    credentials: {
+        accessKeyId: process.env.LINODE_OBJECT_STORAGE_ACCESS_KEY_ID,
+        secretAccessKey: process.env.LINODE_OBJECT_STORAGE_SECRET_ACCESS_KEY,
+    },
+});
+// Multer Storage Configuration
+export const uploads = multer({
+    storage: multerS3({
+        s3: s3Client,
+        bucket: process.env.LINODE_OBJECT_STORAGE_BUCKET,
+        acl: "public-read",
+        contentType: multerS3.AUTO_CONTENT_TYPE,
+        metadata: (req, file, cb) => {
+            cb(null, { fieldName: file.fieldname });
+        },
+        key: (req, file, cb) => {
+            let folderPath = "";
+            if (file.mimetype.startsWith("image")) {
+                folderPath = "Dairy/IMAGE/";
+            } else if (file.mimetype.startsWith("video")) {
+                folderPath = "Dairy/VIDEO/";
+            } else if (file.mimetype.startsWith("application/pdf")) {
+                folderPath = "Dairy/PDF/";
+            } else {
+                folderPath = "Dairy/OTHERS/";
+            }
+            const key = `${folderPath}${Date.now().toString()}_${file.originalname}`;
+            cb(null, key);
+        },
+    }),
+});
+
+// Function to Delete a File from Object Storage
+export const deleteFileFromObjectStorage = async (key) => {
+    try {
+        const params = {
+            Bucket: process.env.LINODE_OBJECT_STORAGE_BUCKET,
+            Key: key,
+        };
+
+        await s3Client.send(new DeleteObjectCommand(params));
+        console.log(`File deleted successfully: ${key}`);
+    } catch (error) {
+        console.error(`Error deleting file: ${error.message}`);
+    }
+};

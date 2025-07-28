@@ -45,7 +45,7 @@ export const getProduct = async (req, res) => {
   }
 };
 
-// READ ONE
+
 export const getProductById = async (req, res) => {
   try {
     const user = await product.findById(req.params.id);

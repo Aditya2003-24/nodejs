@@ -6,9 +6,10 @@ const categoryControll = async (req, res) => {
     const { name } = req.body;
     
    
-    const imagePath = req.file?.path || null;
+    const imagePath = req.file?.key  || null;
     
-    
+    console.log(name)
+    console.log(imagePath)
     
    
     if (!name || !imagePath) {

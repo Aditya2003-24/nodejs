@@ -6,6 +6,7 @@ import addToCart from "../Controllers/cartcontroller.js"
 import { getUser, getUserById, loginWithPhone, sendOtp, updateUserProfile, verifyOtp } from "../Controllers/UserController.js";
 import { placeOrder } from "../Controllers/BookingController.js";
 import { authenticateToken } from "../Middlewares/jwtauthentication.js";
+import { uploads } from "../Middlewares/MulterS3.js";
 
 
 
@@ -24,7 +25,7 @@ router.put("/product",upload.single("image"),updateProduct)
 
 
 
-router.post("/category", upload.single("image"), categoryControll);
+router.post("/category", uploads.single("image"), categoryControll);
 
 
 

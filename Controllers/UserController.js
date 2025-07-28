@@ -7,7 +7,7 @@ import http from 'http';
 
 const otpLimits = {};
 const OTP_LIMIT = 5;
-const OTP_WINDOW = 60 * 60 * 1000; //1hr
+const OTP_WINDOW = 60 * 60 * 1000;
 
 const generateOtp = () => Math.floor(1000 + Math.random() * 9000);
 
@@ -96,8 +96,6 @@ export const sendOtp = async (req, res) => {
   userData.token = token;
 
   console.log('Generated OTP:', otp);
-  console.log('Hashed OTP:', hashedOtp);
-  console.log('User ID:', user._id);
   console.log('JWT Token:', token);
 
   res.status(200).json({ success: true, message: "OTP sent successfully", token });
@@ -172,25 +170,7 @@ export const loginWithPhone = async (req, res) => {
   res.status(200).json({ success: true, message: "Login successful" });
 };
 
-// export const adminLogin = async (req, res) => {
-//   try{
 
-//   const admin = "admin@gmail.com";
-//   const passw = 1234
-//   const {email , password} = req.body;
-
-//   if(email === admin || password === passw){
-//     res.status(200).json({ success: true, message: "Admin login done"});
-//   }
-//   else{
-//     res.status(400).json({ success: false, message: "Email and password not correct"});
-//   }
-// } 
-// catch (err){
-//    res.status(500).json({ success: false, message: err.message });
-// }
-
-// }
 
 export const getUser = async (req, res) => {
     
