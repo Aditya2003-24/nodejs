@@ -7,14 +7,14 @@ dotenv.config();
 
 const s3Client = new S3Client({
     region: process.env.LINODE_OBJECT_STORAGE_REGION,
-    endpoint: new URL(process.env.LINODE_OBJECT_STORAGE_ENDPOINT).toString(), // Ensure a valid URL
+    endpoint: new URL(process.env.LINODE_OBJECT_STORAGE_ENDPOINT).toString(), 
     forcePathStyle: false,
     credentials: {
         accessKeyId: process.env.LINODE_OBJECT_STORAGE_ACCESS_KEY_ID,
         secretAccessKey: process.env.LINODE_OBJECT_STORAGE_SECRET_ACCESS_KEY,
     },
 });
-// Multer Storage Configuration
+
 export const uploads = multer({
     storage: multerS3({
         s3: s3Client,

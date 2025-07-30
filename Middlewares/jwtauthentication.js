@@ -25,4 +25,4 @@ const authenticateToken = (req, res, next) => {
   }
 };
 
-export { generateToken, authenticateToken };
+export { generateToken, authenticateToken }; 
