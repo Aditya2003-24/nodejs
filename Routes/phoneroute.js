@@ -7,6 +7,7 @@ import { getUser, getUserById, loginWithPhone, sendOtp, updateUserProfile, verif
 import { placeOrder } from "../Controllers/BookingController.js";
 import { authenticateToken } from "../Middlewares/jwtauthentication.js";
 import { uploads } from "../Middlewares/MulterS3.js";
+import { SaveLocation , Map } from "../Controllers/MapController.js";
 
 
 
@@ -42,6 +43,9 @@ router.post("/login",loginWithPhone)
 
 router.get("/user/:id",getUserById)
 router.get("/user",getUser)
+
+router.post("/save-location",SaveLocation)
+router.get("/map",Map)
 
 
 export default router;
